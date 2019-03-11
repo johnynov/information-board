@@ -1,4 +1,5 @@
 This is students project conducted on Ms.C. studies on AGH University Cracow, Poland.
+
 Topic: Modelling cell network' users behavior based on BTS anonim data - wtitten in Python and powered by open maps API.
 Project consists three steps:
 1. Estimating paths -  based on distance from three BTS's we calculate user position and further - paths. 
