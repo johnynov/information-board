@@ -60,6 +60,29 @@ public:
         return values;
     }
 
+    /**
+     * Remove advert saved under given id
+     * @param id_advert - advert id
+     * @param password - advert password
+     * @return
+     *      1 -> success
+     *      -1 -> advert not found, no advert under given id
+     *      -2 -> not authorized, when password from advert is not equal to saved one
+     */
+    int remove(const string& id_advert, const string& password) {
+        Advert *advert_to_delete = find_by_id(id_advert);
+        if (advert_to_delete != nullptr) {
+            if (advert_to_delete->getPassword() == password) {
+                adverts.erase(id_advert);
+                return 1;
+            } else {
+                return -2;
+            }
+        } else {
+            return -1;
+        }
+    }
+
     // just for develop
     void print_adverts() {
         cout << endl<< "Adverts [" << adverts.size() << "]:" << endl;
