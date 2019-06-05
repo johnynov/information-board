@@ -122,11 +122,4 @@ public:
         }
     }
 
-    // just for develop
-    void print_adverts() {
-        cout << endl<< "Adverts [" << adverts.size() << "]:" << endl;
-        for (auto const& advert_entry: adverts) {
-            cout << '\t' << advert_entry.first << " -> " << advert_entry.second->to_json() << endl;
-        }
-    }
 };

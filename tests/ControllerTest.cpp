@@ -69,8 +69,6 @@ TEST_CASE("Controller::update_advert", "[controller]") {
         int status = response->getStatus();
         const string &payload = response->getPayload();
 
-        cout << payload << endl;
-
         // then
         REQUIRE(status == 200);
         REQUIRE(is_json_advert(payload));
