@@ -34,3 +34,48 @@ TEST_CASE("Controller::get_adverts", "[controller]") {
         REQUIRE(is_json_array(payload));
     }
 }
+
+TEST_CASE("Controller::remove_advert", "[controller]") {
+
+    SECTION("should return response object with status 200") {
+        // given
+        string advert_id = "2";
+        Advert *initial_advert = repository.find_by_id(advert_id);
+
+        // when
+        Response *response = controller.remove_advert(advert_id, initial_advert->getPassword());
+        int status = response->getStatus();
+        const string &payload = response->getPayload();
+
+        // then
+        REQUIRE(status == 200);
+    }
+
+    SECTION("should return response object with status 404") {
+        // given
+        string advert_id = "2";
+
+        // when
+        Response *response = controller.remove_advert(advert_id, "abcd");
+        int status = response->getStatus();
+        const string &payload = response->getPayload();
+
+        // then
+        REQUIRE(status == 404);
+    }
+
+    SECTION("should return response object with status 401") {
+        // given
+        string advert_id = "1";
+
+        // when
+        Response *response = controller.remove_advert(advert_id, "wrong_password");
+        int status = response->getStatus();
+        const string &payload = response->getPayload();
+
+        // then
+        REQUIRE(status == 401);
+        REQUIRE(is_json_error_message(payload));
+    }
+
+}
