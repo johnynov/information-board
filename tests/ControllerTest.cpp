@@ -6,19 +6,19 @@
 
 Controller controller;
 
-bool is_json_array(const string &s) {
-    regex array_regex("\\[.*\\]");
-    return regex_match(s, array_regex);
+bool is_json_array(const std::string &s) {
+    std::regex array_regex("\\[.*\\]");
+    return std::regex_match(s, array_regex);
 }
 
-bool is_json_advert(const string &s) {
-    regex json_advert("\\{\"id\":.*,\"title\":.*,\"body\":.*\\}");
-    return regex_match(s, json_advert);
+bool is_json_advert(const std::string &s) {
+    std::regex json_advert_regex("\\{\"id\":.*,\"title\":.*,\"body\":.*\\}");
+    return std::regex_match(s, json_advert_regex);
 }
 
-bool is_json_error_message(const string &s) {
-    regex json_error_message("\\{\"field\":.*,\"message\":.*\\}");
-    return regex_match(s, json_error_message);
+bool is_json_error_message(const std::string &s) {
+    std::regex json_error_message_regex("\\{\"field\":.*,\"message\":.*\\}");
+    return std::regex_match(s, json_error_message_regex);
 }
 
 TEST_CASE("Controller::get_adverts", "[controller]") {
@@ -27,7 +27,7 @@ TEST_CASE("Controller::get_adverts", "[controller]") {
         // when
         Response *response = controller.get_adverts();
         int status = response->getStatus();
-        const string &payload = response->getPayload();
+        const std::string &payload = response->getPayload();
 
         // then
         REQUIRE(status == 200);
@@ -42,7 +42,7 @@ TEST_CASE("Controller::add_advert", "[controller]") {
         // when
         Response *response = controller.add_advert("title", "body", "abcd");
         int status = response->getStatus();
-        const string& payload = response->getPayload();
+        const std::string& payload = response->getPayload();
 
         // then
         REQUIRE(status == 200);
@@ -56,7 +56,7 @@ TEST_CASE("Controller::update_advert", "[controller]") {
 
     SECTION("should return response object with status 200 and updated advert") {
         // given
-        string advert_id = "2";
+        std::string advert_id = "2";
         Advert *initial_advert = repository.find_by_id(advert_id);
 
         // when
@@ -67,7 +67,7 @@ TEST_CASE("Controller::update_advert", "[controller]") {
                 initial_advert->getPassword()
         );
         int status = response->getStatus();
-        const string &payload = response->getPayload();
+        const std::string &payload = response->getPayload();
 
         // then
         REQUIRE(status == 200);
@@ -76,12 +76,12 @@ TEST_CASE("Controller::update_advert", "[controller]") {
 
     SECTION("should return response object with status 404") {
         // given
-        string advert_id = "42";
+        std::string advert_id = "42";
 
         // when
         Response *response = controller.update_advert(advert_id, "title", "body", "password");
         int status = response->getStatus();
-        const string &payload = response->getPayload();
+        const std::string &payload = response->getPayload();
 
         // then
         REQUIRE(status == 404);
@@ -89,7 +89,7 @@ TEST_CASE("Controller::update_advert", "[controller]") {
 
     SECTION("should return response object with status 401 and error message") {
         // given
-        string advert_id = "2";
+        std::string advert_id = "2";
         Advert *initial_advert = repository.find_by_id(advert_id);
 
         // when
@@ -100,7 +100,7 @@ TEST_CASE("Controller::update_advert", "[controller]") {
                 "wrong_password"
         );
         int status = response->getStatus();
-        const string &payload = response->getPayload();
+        const std::string &payload = response->getPayload();
 
         // then
         REQUIRE(status == 401);
@@ -113,13 +113,13 @@ TEST_CASE("Controller::remove_advert", "[controller]") {
 
     SECTION("should return response object with status 200") {
         // given
-        string advert_id = "2";
+        std::string advert_id = "2";
         Advert *initial_advert = repository.find_by_id(advert_id);
 
         // when
         Response *response = controller.remove_advert(advert_id, initial_advert->getPassword());
         int status = response->getStatus();
-        const string &payload = response->getPayload();
+        const std::string &payload = response->getPayload();
 
         // then
         REQUIRE(status == 200);
@@ -127,12 +127,12 @@ TEST_CASE("Controller::remove_advert", "[controller]") {
 
     SECTION("should return response object with status 404") {
         // given
-        string advert_id = "2";
+        std::string advert_id = "2";
 
         // when
         Response *response = controller.remove_advert(advert_id, "abcd");
         int status = response->getStatus();
-        const string &payload = response->getPayload();
+        const std::string &payload = response->getPayload();
 
         // then
         REQUIRE(status == 404);
@@ -140,12 +140,12 @@ TEST_CASE("Controller::remove_advert", "[controller]") {
 
     SECTION("should return response object with status 401") {
         // given
-        string advert_id = "1";
+        std::string advert_id = "1";
 
         // when
         Response *response = controller.remove_advert(advert_id, "wrong_password");
         int status = response->getStatus();
-        const string &payload = response->getPayload();
+        const std::string &payload = response->getPayload();
 
         // then
         REQUIRE(status == 401);

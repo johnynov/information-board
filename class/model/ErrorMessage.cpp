@@ -1,26 +1,25 @@
 #include <iostream>
 
-using namespace std;
 
 class ErrorMessage {
 private:
-    string field; // "title" or "body" or "password"
-    string message;
+    std::string field; // "title" or "body" or "password"
+    std::string message;
 public:
-    ErrorMessage(string _field, string _message) {
+    ErrorMessage(std::string _field, std::string _message) {
         field = _field;
         message = _message;
     }
 
-    string to_json() {
+    std::string to_json() {
         return "{\"field\":\"" + field + "\",\"message\":\"" + message + "\"}";
     };
 
-    const string &getField() const {
+    const std::string &getField() const {
         return field;
     }
 
-    const string &getMessage() const {
+    const std::string &getMessage() const {
         return message;
     }
 };

@@ -3,17 +3,17 @@
 #include "../model/Advert.cpp"
 #include "../model/ErrorMessage.cpp"
 
-using namespace std;
-
 
 class Repository {
-    int id_generator = -1;
-    map<string, Advert*> adverts;
-
+private:
+    int id_generator;
+    std::map<std::string, Advert *> adverts;
 public:
     Repository() {
+        id_generator = -1;
+
         // initialize advert repository with some adverts
-        string id = get_new_id();
+        std::string id = get_new_id();
         adverts[id] = new Advert(id, "Title 0", "Body", "Pass");
         id = get_new_id();
         adverts[id] = new Advert(id, "Title 1", "Body", "Pass");
@@ -27,9 +27,9 @@ public:
      * Generate new unique advert id
      * @return advert id
      */
-    string get_new_id() {
+    std::string get_new_id() {
         id_generator++;
-        return ::to_string(id_generator);
+        return std::to_string(id_generator);
     }
 
     /**
@@ -37,12 +37,12 @@ public:
      * @param id_advert - advert id
      * @return saved advert or nullptr when advert is not found
      */
-    Advert* find_by_id(const string& id_advert) {
-        map<string, Advert*>::iterator it;
+    Advert *find_by_id(const std::string &id_advert) {
+        std::map<std::string, Advert *>::iterator it;
         it = adverts.find(id_advert);
 
         if (it != adverts.end()) {
-            return it -> second;
+            return it->second;
         } else {
             return nullptr;
         }
@@ -52,9 +52,9 @@ public:
      * Find all saved adverts
      * @return vector of saved adverts
      */
-    vector<Advert*> find_all() {
-        vector<Advert*> values;
-        for (auto const& advert_entry: adverts) {
+    std::vector<Advert *> find_all() {
+        std::vector<Advert *> values;
+        for (auto const &advert_entry: adverts) {
             values.push_back(advert_entry.second);
         }
         return values;
@@ -68,7 +68,7 @@ public:
      *      1 -> success
      *      -1 -> id taken
      */
-    int add(const string& id_advert, Advert *advert) {
+    int add(const std::string &id_advert, Advert *advert) {
         if (adverts.count(id_advert) == 0) {
             adverts[id_advert] = advert;
             return 1;
@@ -108,7 +108,7 @@ public:
      *      -1 -> advert not found, no advert under given id
      *      -2 -> not authorized, when password from advert is not equal to saved one
      */
-    int remove(const string& id_advert, const string& password) {
+    int remove(const std::string &id_advert, const std::string &password) {
         Advert *advert_to_delete = find_by_id(id_advert);
         if (advert_to_delete != nullptr) {
             if (advert_to_delete->getPassword() == password) {

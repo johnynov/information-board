@@ -1,19 +1,17 @@
 #include <iostream>
 
-using namespace std;
-
 
 class Response {
 private:
     int status; // response status: 200, 401 etc
-    string payload; // json payload
+    std::string payload; // json payload
 public:
     Response(int _status) {
         status = _status;
         payload = "";
     }
 
-    Response(int _status, string _payload) {
+    Response(int _status, std::string _payload) {
         status = _status;
         payload = _payload;
     }
@@ -22,7 +20,7 @@ public:
         return status;
     }
 
-    const string &getPayload() const {
+    const std::string &getPayload() const {
         return payload;
     }
 };

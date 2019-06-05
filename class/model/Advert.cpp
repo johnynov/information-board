@@ -1,39 +1,38 @@
 #include <iostream>
 
-using namespace std;
 
 class Advert {
 private:
-    string id;
-    string title;
-    string body;
-    string password;
+    std::string id;
+    std::string title;
+    std::string body;
+    std::string password;
 public:
-    Advert(string _id, string _title, string _body, string _password) {
+    Advert(std::string _id, std::string _title, std::string _body, std::string _password) {
         id = _id;
         title = _title;
         body = _body;
         password = _password;
     };
 
-    string to_json() {
+    std::string to_json() {
         return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\"}";
 //        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\",\"password\":\"" + password + "\"}";
     };
 
-    const string &getId() const {
+    const std::string &getId() const {
         return id;
     }
 
-    const string &getTitle() const {
+    const std::string &getTitle() const {
         return title;
     }
 
-    const string &getBody() const {
+    const std::string &getBody() const {
         return body;
     }
 
-    const string &getPassword() const {
+    const std::string &getPassword() const {
         return password;
     }
 };

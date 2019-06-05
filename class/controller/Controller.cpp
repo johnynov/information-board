@@ -12,7 +12,7 @@ public:
      * @return response object with advert list payload
      */
     Response *get_adverts() {
-        string adverts_json = "[";
+        std::string adverts_json = "[";
         for (auto const &advert: repository.find_all()) {
             adverts_json += advert->to_json() + ",";
         }
@@ -28,10 +28,10 @@ public:
      * @param password - advert password
      * @return response object with added advert or error message
      */
-    Response *add_advert(const string& title, const string& body, const string& password) {
+    Response *add_advert(const std::string &title, const std::string &body, const std::string &password) {
         // todo: validate data
 
-        string new_advert_id = repository.get_new_id();
+        std::string new_advert_id = repository.get_new_id();
         Advert *new_advert = new Advert(new_advert_id, title, body, password);
 
         int add_result = repository.add(new_advert_id, new_advert);
@@ -60,7 +60,8 @@ public:
      * @param password - advert password, must match already saved one
      * @return response object with updated advert or error message
      */
-    Response *update_advert(const string& id, const string& title, const string& body, const string& password) {
+    Response *update_advert(const std::string &id, const std::string &title, const std::string &body,
+                            const std::string &password) {
         // todo: validate data
 
         Advert *updated_advert = new Advert(id, title, body, password);
@@ -93,7 +94,7 @@ public:
      * @param password - advert password, must match already saved one
      * @return response object with optional error message
      */
-    Response *remove_advert(const string &id, const string &password) {
+    Response *remove_advert(const std::string &id, const std::string &password) {
         int remove_result = repository.remove(id, password);
 
         switch (remove_result) {

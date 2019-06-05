@@ -17,7 +17,7 @@ TEST_CASE("Advert repository", "[repository]") {
     SECTION("should add new advert") {
         // given
         int initial_adverts_count = repository.find_all().size();
-        string new_advert_id = repository.get_new_id();
+        std::string new_advert_id = repository.get_new_id();
         Advert *new_advert = new Advert(new_advert_id, "Title", "Body", "qwer");
 
         // when
@@ -32,7 +32,7 @@ TEST_CASE("Advert repository", "[repository]") {
 
     SECTION("should update advert") {
         // given
-        string advert_id = "2";
+        std::string advert_id = "2";
         Advert *initial_advert = repository.find_by_id(advert_id);
         Advert *updated_advert = new Advert(
                 advert_id,
@@ -54,7 +54,7 @@ TEST_CASE("Advert repository", "[repository]") {
 
     SECTION("should not update advert, advert not found") {
         // given
-        string advert_id = "42";
+        std::string advert_id = "42";
         Advert *updated_advert = new Advert(advert_id, "title", "body", "password");
 
         // when
@@ -68,7 +68,7 @@ TEST_CASE("Advert repository", "[repository]") {
 
     SECTION("should not update advert, not authorized") {
         // given
-        string advert_id = "2";
+        std::string advert_id = "2";
         Advert *initial_advert = repository.find_by_id(advert_id);
         Advert *updated_advert = new Advert(
                 advert_id,
@@ -89,7 +89,7 @@ TEST_CASE("Advert repository", "[repository]") {
     SECTION("should remove advert") {
         // given
         int initial_adverts_count = repository.find_all().size();
-        string advert_id = "1";
+        std::string advert_id = "1";
         Advert *initial_advert = repository.find_by_id(advert_id);
 
         // when
@@ -106,7 +106,7 @@ TEST_CASE("Advert repository", "[repository]") {
     SECTION("should not remove advert, advert not found") {
         // given
         int initial_adverts_count = repository.find_all().size();
-        string advert_id = "42";
+        std::string advert_id = "42";
 
         // when
         int result = repository.remove(advert_id, "abcd");
@@ -120,7 +120,7 @@ TEST_CASE("Advert repository", "[repository]") {
     SECTION("should not remove advert, not authorized") {
         // given
         int initial_adverts_count = repository.find_all().size();
-        string advert_id = "2";
+        std::string advert_id = "2";
         Advert *initial_advert = repository.find_by_id(advert_id);
 
         // when
