@@ -57,6 +57,21 @@ void setup() {
     });
 
     server.on("/advert", HTTP_PUT, [](AsyncWebServerRequest *request) {
+        Serial.println("Adverts PUT Request");
+
+        if (request->hasParam("password", true) && request->hasParam("title", true) && request->hasParam("body", true)) {
+            string title = request->getParam("title", true)->value();
+            string body = request->getParam("body", true)->value();
+            string password = request->getParam("password", true)->value();
+
+            Response *response = controller.add_advert(title, body, password);
+            int status = response->getStatus();
+            const string& payload = response->getPayload();
+
+            request->send(status, "application/json", payload);
+        } else {
+            request->send(400);
+        }
     });
 
     server.on("/advert", HTTP_PATCH, [](AsyncWebServerRequest *request) {
