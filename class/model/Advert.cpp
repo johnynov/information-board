@@ -18,7 +18,7 @@ public:
 
     string to_json() {
 //        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\"}";
-        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\",\"password:\"" + password + "\"}";
+        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\",\"password\":\"" + password + "\"}";
     };
 
     const string &getPassword() const {

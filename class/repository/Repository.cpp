@@ -60,6 +60,23 @@ public:
         return values;
     }
 
+    /**
+     * Save passed advert in memory
+     * @param id_advert - unique advert id
+     * @param advert - new advert
+     * @return
+     *      1 -> success
+     *      -1 -> id taken
+     */
+    int add(const string& id_advert, Advert *advert) {
+        if (adverts.count(id_advert) == 0) {
+            adverts[id_advert] = advert;
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
     // just for develop
     void print_adverts() {
         cout << endl<< "Adverts [" << adverts.size() << "]:" << endl;
