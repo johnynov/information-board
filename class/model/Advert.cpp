@@ -17,9 +17,21 @@ public:
     };
 
     string to_json() {
-//        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\"}";
-        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\",\"password:\"" + password + "\"}";
+        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\"}";
+//        return "{\"id\":\"" + id + "\",\"title\":\"" + title + "\",\"body\":\"" + body + "\",\"password\":\"" + password + "\"}";
     };
+
+    const string &getId() const {
+        return id;
+    }
+
+    const string &getTitle() const {
+        return title;
+    }
+
+    const string &getBody() const {
+        return body;
+    }
 
     const string &getPassword() const {
         return password;
