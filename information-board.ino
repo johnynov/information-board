@@ -109,6 +109,20 @@ void setup() {
 
     // remove advert
     server.on("/adverts", HTTP_DELETE, [](AsyncWebServerRequest *request) {
+        Serial.println("Adverts DELETE Request");
+
+        if (request->hasParam("id") && request->hasParam("password")) {
+            string id = request->getParam("id")->value();
+            string password = request->getParam("password")->value();
+
+            Response *response = controller.remove_advert(id, password);
+            int status = response->getStatus();
+            const string &payload = response->getPayload();
+
+            request->send(status, "application/json", payload);
+        } else {
+            request->send(400);
+        }
     });
 
     server.begin();
