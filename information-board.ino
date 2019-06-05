@@ -74,6 +74,22 @@ void setup() {
 
     // update advert
     server.on("/adverts", HTTP_PATCH, [](AsyncWebServerRequest *request) {
+        Serial.println("Adverts PATCH Request");
+
+        if (request->hasParam("id") && request->hasParam("title") && request->hasParam("body") && request->hasParam("password")) {
+            string id = request->getParam("id")->value();
+            string title = request->getParam("title")->value();
+            string body = request->getParam("body")->value();
+            string password = request->getParam("password")->value();
+
+            Response *response = controller.update_advert(id, title, body, password);
+            int status = response->getStatus();
+            const string &payload = response->getPayload();
+
+            request->send(status, "application/json", payload);
+        } else {
+            request->send(400);
+        }
     });
 
     // remove advert
