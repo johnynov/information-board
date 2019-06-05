@@ -33,4 +33,64 @@ TEST_CASE("Controller::get_adverts", "[controller]") {
         REQUIRE(status == 200);
         REQUIRE(is_json_array(payload));
     }
+
+}
+
+TEST_CASE("Controller::update_advert", "[controller]") {
+
+    SECTION("should return response object with status 200 and updated advert") {
+        // given
+        string advert_id = "2";
+        Advert *initial_advert = repository.find_by_id(advert_id);
+
+        // when
+        Response *response = controller.update_advert(
+                advert_id,
+                "Updated title",
+                initial_advert->getBody(),
+                initial_advert->getPassword()
+        );
+        int status = response->getStatus();
+        const string &payload = response->getPayload();
+
+        cout << payload << endl;
+
+        // then
+        REQUIRE(status == 200);
+        REQUIRE(is_json_advert(payload));
+    }
+
+    SECTION("should return response object with status 404") {
+        // given
+        string advert_id = "42";
+
+        // when
+        Response *response = controller.update_advert(advert_id, "title", "body", "password");
+        int status = response->getStatus();
+        const string &payload = response->getPayload();
+
+        // then
+        REQUIRE(status == 404);
+    }
+
+    SECTION("should return response object with status 401 and error message") {
+        // given
+        string advert_id = "2";
+        Advert *initial_advert = repository.find_by_id(advert_id);
+
+        // when
+        Response *response = controller.update_advert(
+                advert_id,
+                "Updated title",
+                initial_advert->getBody(),
+                "wrong_password"
+        );
+        int status = response->getStatus();
+        const string &payload = response->getPayload();
+
+        // then
+        REQUIRE(status == 401);
+        REQUIRE(is_json_error_message(payload));
+    }
+
 }
