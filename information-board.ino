@@ -5,6 +5,9 @@
 #include "FS.h"
 #include "class/controller/Controller.cpp"
 
+
+Controller controller;
+
 AsyncWebServer server(80);
 
 IPAddress localIp(192, 168, 1, 1);
@@ -12,6 +15,7 @@ IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 
 void setup() {
+
     Serial.begin(115200);
     Serial.println();
 
@@ -53,10 +57,19 @@ void setup() {
         Serial.println("main.js Request");
     });
 
-    server.on("/advert", HTTP_GET, [](AsyncWebServerRequest *request) {
+    // get adverts
+    server.on("/adverts", HTTP_GET, [](AsyncWebServerRequest *request) {
+        Serial.println("Adverts GET Request");
+
+        Response *response = controller.get_adverts();
+        int status = response->getStatus();
+        const string& payload = response->getPayload();
+
+        request->send(status, "application/json", payload);
     });
 
-    server.on("/advert", HTTP_PUT, [](AsyncWebServerRequest *request) {
+    // add advert
+    server.on("/adverts", HTTP_PUT, [](AsyncWebServerRequest *request) {
         Serial.println("Adverts PUT Request");
 
         if (request->hasParam("password", true) && request->hasParam("title", true) && request->hasParam("body", true)) {
@@ -74,10 +87,12 @@ void setup() {
         }
     });
 
-    server.on("/advert", HTTP_PATCH, [](AsyncWebServerRequest *request) {
+    // update advert
+    server.on("/adverts", HTTP_PATCH, [](AsyncWebServerRequest *request) {
     });
 
-    server.on("/advert", HTTP_DELETE, [](AsyncWebServerRequest *request) {
+    // remove advert
+    server.on("/adverts", HTTP_DELETE, [](AsyncWebServerRequest *request) {
     });
 
     server.begin();

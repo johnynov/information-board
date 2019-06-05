@@ -15,4 +15,12 @@ public:
     string to_json() {
         return "{\"field\":\"" + field + "\",\"message\":\"" + message + "\"}";
     };
+
+    const string &getField() const {
+        return field;
+    }
+
+    const string &getMessage() const {
+        return message;
+    }
 };
