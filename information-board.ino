@@ -63,7 +63,7 @@ void setup() {
 
         Response *response = controller.get_adverts();
         int status = response->getStatus();
-        const std::string &payload = response->getPayload();
+        String payload = response->getPayload().c_str();
 
         request->send(status, "application/json", payload);
     });
@@ -73,13 +73,13 @@ void setup() {
         Serial.println("Adverts PUT Request");
 
         if (request->hasParam("password", true) && request->hasParam("title", true) && request->hasParam("body", true)) {
-            std::string title = request->getParam("title", true)->value();
-            std::string body = request->getParam("body", true)->value();
-            std::string password = request->getParam("password", true)->value();
+            String title = request->getParam("title", true)->value();
+            String body = request->getParam("body", true)->value();
+            String password = request->getParam("password", true)->value();
 
-            Response *response = controller.add_advert(title, body, password);
+            Response *response = controller.add_advert(title.c_str(), body.c_str(), password.c_str());
             int status = response->getStatus();
-            const std::string &payload = response->getPayload();
+            String payload = response->getPayload().c_str();
 
             request->send(status, "application/json", payload);
         } else {
@@ -92,14 +92,14 @@ void setup() {
         Serial.println("Adverts PATCH Request");
 
         if (request->hasParam("id") && request->hasParam("title") && request->hasParam("body") && request->hasParam("password")) {
-            std::string id = request->getParam("id")->value();
-            std::string title = request->getParam("title")->value();
-            std::string body = request->getParam("body")->value();
-            std::string password = request->getParam("password")->value();
+            String id = request->getParam("id")->value();
+            String title = request->getParam("title")->value();
+            String body = request->getParam("body")->value();
+            String password = request->getParam("password")->value();
 
-            Response *response = controller.update_advert(id, title, body, password);
+            Response *response = controller.update_advert(id.c_str(), title.c_str(), body.c_str(), password.c_str());
             int status = response->getStatus();
-            const std::string &payload = response->getPayload();
+            String payload = response->getPayload().c_str();
 
             request->send(status, "application/json", payload);
         } else {
@@ -112,12 +112,12 @@ void setup() {
         Serial.println("Adverts DELETE Request");
 
         if (request->hasParam("id") && request->hasParam("password")) {
-            std::string id = request->getParam("id")->value();
-            std::string password = request->getParam("password")->value();
+            String id = request->getParam("id")->value();
+            String password = request->getParam("password")->value();
 
-            Response *response = controller.remove_advert(id, password);
+            Response *response = controller.remove_advert(id.c_str(), password.c_str());
             int status = response->getStatus();
-            const std::string &payload = response->getPayload();
+            String payload = response->getPayload().c_str();
 
             request->send(status, "application/json", payload);
         } else {

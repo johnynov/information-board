@@ -9,6 +9,7 @@ private:
     int id_generator;
     std::map<std::string, Advert *> adverts;
 public:
+
     Repository() {
         id_generator = -1;
 
@@ -29,7 +30,9 @@ public:
      */
     std::string get_new_id() {
         id_generator++;
-        return std::to_string(id_generator);
+        char str[30];
+        sprintf(str, "%d", id_generator);
+        return str;
     }
 
     /**
@@ -54,7 +57,7 @@ public:
      */
     std::vector<Advert *> find_all() {
         std::vector<Advert *> values;
-        for (auto const &advert_entry: adverts) {
+        for (auto const &advert_entry : adverts) {
             values.push_back(advert_entry.second);
         }
         return values;
