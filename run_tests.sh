@@ -13,6 +13,5 @@ for i in `find . -name '*.out'`; do
     echo "testing $i"
     $i
 done
-read -n 1 -s -r -p "Press any key to exit "
-echo ""
+cd ".."
 exit

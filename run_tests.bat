@@ -13,5 +13,4 @@ for %%i in (*.exe) do (
     ECHO Testing %%i
     %%i
 )
-ECHO Press any key to exit...
-pause>nul
+cd ..
